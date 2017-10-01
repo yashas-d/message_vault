@@ -22,7 +22,6 @@ public class Controller {
 
   @RequestMapping("/readFile")
   public String fileReader() throws IOException {
-    s3processor.readFromS3();
-    return "Done printing to console";
+    return s3processor.readFromS3();
   }
 }

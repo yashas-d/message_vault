@@ -25,32 +25,42 @@
 			<version>1.9.5</version>
 		</dependency>
 		<dependency>
-    <groupId>com.amazonaws</groupId>
-    <artifactId>aws-java-sdk-storagegateway</artifactId>
-    <version>1.9.5</version>
-</dependency>
-		
-		 <dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpclient</artifactId>
-    <version>4.5.2</version>
-    </dependency>
-    <dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpcore</artifactId>
-    <version>4.4.5</version>
-</dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-storagegateway</artifactId>
+			<version>1.9.5</version>
+		</dependency>
 
-<dependency>
-        <groupId>joda-time</groupId>
-        <artifactId>joda-time</artifactId>
-        <version>2.9.1</version>
-</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.1</version>
+		</dependency>
 
 	</dependencies>
 
 	<properties>
 		<java.version>1.8</java.version>
+
+
+		<!-- spring boot -->
+		<debug.port>5000</debug.port>
+		<run.jvmArguments>-Dspring.profiles.active=dev -Dapplication.home=.
+			-Dapplication.name=${project.name} -Dapplication.environment=dev
+			-Dproject.name=${project.name} -Xdebug
+			-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${debug.port}
+		</run.jvmArguments>
+
 	</properties>
 
 

@@ -21,15 +21,18 @@ public class S3Invoker {
       new BasicAWSCredentials("AKIAI34MMHYGX2WMZTIA", "tycUt1Wd3XKBWDR1YPOgW5Zqf6NHRIgPPtN1Vidb");
   private final AmazonS3 s3client = new AmazonS3Client(credentials);
 
-  public void invoke(String bucketName, String file) throws IOException {
+  public StringBuffer invoke(String bucketName, String file) throws IOException {
     S3Object s3object = s3client.getObject(new GetObjectRequest(bucketName, file));
     System.out.println(s3object.getObjectMetadata().getContentType());
     System.out.println(s3object.getObjectMetadata().getContentLength());
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(s3object.getObjectContent()));
     String line;
+    StringBuffer content = new StringBuffer();
     while((line = reader.readLine()) != null) {
       System.out.println(line);
+      content.append(line);
     }
+    return content;
   }	
 }

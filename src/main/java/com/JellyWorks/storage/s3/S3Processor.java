@@ -14,8 +14,7 @@ public class S3Processor {
   @Autowired
   S3Invoker s3invoker;
 
-  public String readFromS3() throws IOException {
-    StringBuffer buffer = s3invoker.invoke(bucketName, file);
-    return buffer.toString();
+  public void readFromS3() throws IOException {
+    s3invoker.invoke(bucketName, file);
   }
 }

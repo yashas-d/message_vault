@@ -24,7 +24,6 @@
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.9.5</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-storagegateway</artifactId>
@@ -36,7 +35,6 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.2</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
@@ -48,18 +46,11 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.9.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>1.8.7.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
-		</dependency>
+		<!-- <dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.5.1</version>
+		</dependency> -->
 
 	</dependencies>
 

@@ -18,7 +18,7 @@ import com.amazonaws.services.s3.model.S3Object;
 public class S3Invoker {
 
   private final AWSCredentials credentials = 
-      new BasicAWSCredentials("AKIAILJKSLLP4BW33AGQ", "EV8hgXcV2qt56aqIuuPJXT0baHMvP5McJz9pqXa1");
+      new BasicAWSCredentials("PlaceHolder", "PlaceHolder");
   private final AmazonS3 s3client = new AmazonS3Client(credentials);
 
   public StringBuffer invoke(String bucketName, String file) throws IOException {

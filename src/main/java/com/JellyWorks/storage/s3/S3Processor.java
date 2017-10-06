@@ -9,13 +9,15 @@ import org.springframework.stereotype.Component;
 public class S3Processor {
 
   private final String bucketName = "aws-website-ramyaravishankar-m8";
-  private final String file = "RawInput.txt";
+  //private final String file = "RawInput.txt";
 
   @Autowired
   S3Invoker s3invoker;
-
-  public String readFromS3() throws IOException {
-    StringBuffer buffer = s3invoker.invoke(bucketName, file);
-    return buffer.toString();
+  
+  public String readFromS3(String fileName) throws IOException {
+	  if(s3invoker.invoke(bucketName, fileName))
+		  return fileName+" has been processed.";
+	  else
+		  return fileName+" not processed.";
   }
 }

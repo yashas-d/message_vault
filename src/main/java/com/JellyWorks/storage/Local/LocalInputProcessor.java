@@ -1,10 +1,8 @@
 package com.JellyWorks.storage.Local;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.FileReader;
+import java.io.InputStream;
 import com.JellyWorks.storage.Local.LocalInputInvoker;
 
 
@@ -15,16 +13,11 @@ public class LocalInputProcessor {
 	}
  
 	public String process(String fileName) throws IOException{
-		try {
-			if(invoker.invoke(fileName))
-				return fileName+" has been processed.";
-			else
-				return fileName+" not processed.";
-		}
-		catch (IOException e) {
-			//e.printStackTrace();
-			return "File processing interuppted due to Exception";
-		}
+		InputStream inputStreamReader=new FileInputStream("C:/Users/Ramya/Desktop/AWS/"+fileName);
+		if(invoker.invoke(inputStreamReader))
+			return fileName+" has been processed.";
+		else
+			return fileName+" not processed.";
 		
 	}
 }

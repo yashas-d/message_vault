@@ -3,25 +3,23 @@ package com.JellyWorks.Helpers;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-
 import com.JellyWorks.Helpers.TypeChecks;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 
 public class PreprocessFile {
 
 	private String path;
-	//private String fileName;
 	private InputStream inputStream;
 	public PreprocessFile(InputStream i) throws IOException{
 		this.inputStream=i;
 		this.path="C:/Users/Ramya/Desktop/AWS/";
 	}
+	@Cacheable("splitFile")
 	public boolean splitFile(){
 		try{
 			BufferedReader reader=new BufferedReader(new InputStreamReader(inputStream));

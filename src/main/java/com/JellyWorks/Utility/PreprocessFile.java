@@ -66,9 +66,9 @@ public class PreprocessFile {
 		    		writer.write(line);
 		    		count++;
 		    		key=Integer.toString(count);
-		    		if(values.get(key)!=null)
+		    		//if(values.get(key)!=null)
 		    			values.set(key, line);
-		    		System.out.println(line);
+		    		//System.out.println(line);
 		    		System.out.println("Value added: " + values.get(key) + " for "+ key);
 		    		writer.newLine();
 		    	}

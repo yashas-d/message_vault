@@ -1,4 +1,4 @@
-package com.JellyWorks.Helpers;
+package com.JellyWorks.Utility;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,35 +7,48 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import com.JellyWorks.Helpers.TypeChecks;
+import com.JellyWorks.Utility.TypeChecks;
+import com.JellyWorks.storage.redis.RedisProcessor;
+
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
+import java.net.URISyntaxException;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 public class PreprocessFile {
 
 	private String path;
 	private InputStream inputStream;
+	private ConfigurableApplicationContext configurableApplicationContext;
+	
 	public PreprocessFile(InputStream i) throws IOException{
 		this.inputStream=i;
 		this.path="C:/Users/Ramya/Desktop/AWS/";
+		this.configurableApplicationContext = new AnnotationConfigApplicationContext(RedisProcessor.class);
 	}
 	@Cacheable("splitFile")
-	public boolean splitFile(){
+	public boolean splitFile() throws URISyntaxException, Exception {
+		BufferedReader reader=new BufferedReader(new InputStreamReader(inputStream));
+		BufferedWriter writer=null;
 		try{
-			BufferedReader reader=new BufferedReader(new InputStreamReader(inputStream));
-			String line;
-			int curr_month=1;
+			String line="";
+			int curr_month=0;
 			String out_folder="Output";
 			createDir(out_folder,path);
 			String outfile="Conversation_Month_";
 			String ext=".txt";
-			BufferedWriter writer = null;
+			StringRedisTemplate redisTemplate = (StringRedisTemplate) configurableApplicationContext.getBean("strRedisTemplate");
+			ValueOperations<String, String> values = redisTemplate.opsForValue();
+			String key="default";
+			int count=0;
 			int month=0;
-		    while((line=reader.readLine()) != null) {
+		    while((line=reader.readLine()) != null){ 
 		    	//Need better logic to differentiate between message continuation. Regex char for split may be part of the message as well.
-		    	System.out.println(line);
 		    	if(line.indexOf(",")!=-1){
 		    		String date_of_msg=line.substring(0, line.indexOf(","));
+		    		key=date_of_msg;
 		    		if(TypeChecks.isValidDate(date_of_msg)){
 		    			String month_of_msg=date_of_msg.substring(0,date_of_msg.indexOf("/"));
 			    		if(TypeChecks.isNumeric(month_of_msg))
@@ -48,24 +61,31 @@ public class PreprocessFile {
 				    	}	
 		    		}
 		    	}
-		    	if(writer!=null){
-		    		System.out.println(line);
+		    	if(!writer.equals(null)){
+		    		//Need better logic for key
 		    		writer.write(line);
+		    		count++;
+		    		key=Integer.toString(count);
+		    		if(values.get(key)!=null)
+		    			values.set(key, line);
+		    		System.out.println(line);
+		    		System.out.println("Value added: " + values.get(key) + " for "+ key);
 		    		writer.newLine();
 		    	}
-		    	
 		    }
-		    inputStream.close();
-		    if(writer!=null){
-			    writer.close();
-		    }
-		    
-		    return true;
+		    	return true;
 		}
 		catch(Exception e){
 			e.printStackTrace();
 			return false;
-		}	
+		}
+		finally {
+			reader.close();
+		    if(writer!=null){
+			    writer.close();
+		    }
+			configurableApplicationContext.close();
+		}		
 	}
 	private void createDir(String dir,String path){
 		File theDir = new File(path+"/"+dir);

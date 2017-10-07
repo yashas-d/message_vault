@@ -1,14 +1,12 @@
 package com.JellyWorks.controller;
 
-import java.io.IOException;
-
+import java.net.URISyntaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.JellyWorks.storage.Local.LocalInputInvoker;
 import com.JellyWorks.storage.Local.LocalInputProcessor;
 import com.JellyWorks.storage.s3.S3Processor;
@@ -28,7 +26,7 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/readFile", method=RequestMethod.GET, params="file")
-	public String fileReader(@RequestParam(value = "file") String fileName) throws IOException {
+	public String fileReader(@RequestParam(value = "file") String fileName) throws URISyntaxException, Exception {
 		/*localProcessing=new LocalInputProcessor();
 		try {
 			return localProcessing.process(fileName);

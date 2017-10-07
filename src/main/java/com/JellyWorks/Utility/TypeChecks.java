@@ -1,4 +1,4 @@
-package com.JellyWorks.Helpers;
+package com.JellyWorks.Utility;
 
 import java.util.HashSet;
 import java.util.Set;

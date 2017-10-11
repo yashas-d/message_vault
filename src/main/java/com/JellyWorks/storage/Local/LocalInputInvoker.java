@@ -15,8 +15,8 @@ public class LocalInputInvoker {
  
 	public boolean invoke(InputStream inputStreamReader) throws URISyntaxException, Exception{
 
-		PreprocessFile file=new PreprocessFile(inputStreamReader);
-		return file.splitFile();
+		PreprocessFile file=new PreprocessFile();
+		return file.splitFile(inputStreamReader);
 	}
 	
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class S3Processor {
 
   private final String bucketName = "aws-website-ramyaravishankar-m8";
-  //private final String file = "RawInput.txt";
 
   @Autowired
   S3Invoker s3invoker;

@@ -1,11 +1,12 @@
 package com.JellyWorks.Utility;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import com.JellyWorks.Entity.Message;
 import com.JellyWorks.Utility.TypeChecks;
+import com.JellyWorks.storage.mongoDB.MessageRepository;
 import com.JellyWorks.storage.redis.RedisInvoker;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import java.util.List;
 @Component
 public class PreprocessFile {
 
+	@Autowired
+	MessageRepository repository;
+	
 	@Autowired
 	RedisInvoker redisInvoker;
 	
@@ -46,6 +50,8 @@ public class PreprocessFile {
 		      } else {
 		        // Add to cache'
 		        redisInvoker.writeToCache(initDate, messages);
+		        //Add to DB
+		        repository.save(new Message(initDate, messages));
 		        // Wipe data
 		         initDate = date;
 		         messages.clear();
